@@ -8,4 +8,4 @@ Bot Service: PBot Actual
 
 -----
 
-.
+`Back to API <api.html>`_
