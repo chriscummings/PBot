@@ -1,0 +1,41 @@
+<pre><code class="language-treeview">pbot/
+|-- docs/
+|-- services/
+|   |-- bot/
+|   |   |-- src/
+|   |   |    |-- pbot/
+|   |   |    |   |-- middleware/
+|   |   |    |   |   |-- base.py (Abstract class all middleware inherit)
+|   |   |    |   |   |-- reload_prompt.py (Constantly reloads prompt)
+|   |   |    |   |   |-- simple_openai.py (OpenAI middleware)
+|   |   |    |   |   |-- tacos.py (Disseminates taco recipes)
+|   |   |    |   |   |-- trim_messages_by_token.py (Trims messages by token)
+|   |   |    |   |-- bot.py (PBot class)
+|   |   |    |   |-- constants.py
+|   |   |    |   |-- logger.py
+|   |   |    |   |-- models.py
+|   |   |    |   |-- utils.py
+|   |   |    |-- app.py (Docker entry point)
+|   |   |    `-- requirements.txt
+|   |   `-- Dockerfile
+|   |-- transceiver/
+|   |   |-- src/
+|   |   |   |-- transciever/
+|   |   |   |   |-- constants.py
+|   |   |   |   |-- logger.py
+|   |   |   |   |-- models.py
+|   |   |   |   |-- process_msg.py (Logic for storing and sending message)
+|   |   |   |   `-- utils.py
+|   |   |   |-- app.py (Docker entry point)
+|   |   |   `-- requirements.txt
+|   |   `-- Dockerfile
+|-- .env
+|-- .gitignore
+|-- .readthedocs.yaml
+|-- docker-compose.yaml
+|-- example.env
+|-- LICENSE
+|-- README.md
+|-- requirements.txt
+`-- version
+</code></pre>

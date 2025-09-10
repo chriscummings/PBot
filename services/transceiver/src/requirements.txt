@@ -1,0 +1,5 @@
+# Transceiver Python Requirements.
+
+redis
+discord
+python-dotenv

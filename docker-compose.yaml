@@ -1,0 +1,67 @@
+services:
+
+  redis:
+    image: redis/redis-stack-server
+    container_name: pbot-redis
+    ports:
+    - '6379:6379'
+    # platform: linux/arm64 # Uncomment if you are on an ARM machine like a Raspberry Pi
+    volumes:
+     - redis_data:/data
+    networks:
+    - backend
+
+  redis-insight:
+    image: redis/redisinsight:latest
+    container_name: pbot-redis-insight
+    ports:
+    - '5540:5540'
+    # platform: linux/arm64
+    depends_on:
+    - redis
+    networks:
+    - frontend
+    - backend
+    volumes:
+     - redis_insight:/data
+
+  bot:
+    container_name: pbot-bot
+    build:
+      context: ./services/bot
+      dockerfile: Dockerfile
+    volumes:
+    - ./services/bot/src:/src
+    depends_on:
+    - redis
+    networks:
+    - backend
+    environment:
+      - OPENAI_KEY=${OPENAI_KEY}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+
+  transceiver:
+    container_name: pbot-transceiver
+    build:
+      context: ./services/transceiver
+      dockerfile: Dockerfile
+    volumes:
+    - ./services/transceiver/src:/src
+    depends_on:
+    - redis
+    networks:
+    - backend
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+
+
+volumes:
+  redis_data:
+  redis_insight:
+
+networks:
+  backend:
+  frontend:

@@ -1,0 +1,5 @@
+# Local Development Python Requirements
+
+sphinx
+sphinx-autodoc-typehints
+sphinx_book_theme
