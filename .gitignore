@@ -1,7 +1,6 @@
 **.log
 .env
 **/.DS_Store
-docs/build
 **/__pycache__
 
 
