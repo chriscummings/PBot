@@ -10,8 +10,6 @@ from pbot.constants import REDIS_CHANNEL_KEY_PREFIX
 from pbot.constants import REDIS_MESSAGES_KEY
 from pbot.constants import REDIS_MESSAGE_KEY_PREFIX
 
-from pbot.models import Response
-
 def channel_message_ids(redis: Redis, channel_id: str, hours: int=1, mins: int=0) ->list:
     """Returns a list of message ids from a channel within a timeframe.
 

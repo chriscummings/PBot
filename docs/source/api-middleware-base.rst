@@ -1,4 +1,4 @@
-Middleware Base
+Middleware Base Class
 #######################
 
 .. automodule:: pbot.middleware.base
