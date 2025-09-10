@@ -1,10 +1,10 @@
 
 import sys, os
-html_theme = 'sphinx_rtd_theme'
+html_theme = 'shibuya'
 # html_theme_path = [sphinx_readable_theme.get_html_theme_path()]
-# html_theme_options = {
-#     "color_mode": "light",   # force light mode
-# }
+html_theme_options = {
+    "color_mode": "light",   # force light mode
+}
 
 
 
