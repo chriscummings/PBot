@@ -81,22 +81,14 @@ extensions = [
 ]
 
 
-
-# extensions = [
-#     "sphinx.ext.autodoc",
-#     # "sphinx.ext.napoleon",
-#     # "sphinx.ext.viewcode",
-#     # "sphinx.ext.autosummary"
-# ]
-
 autodoc_mock_imports = [
 	'tiktoken',
 	'openai',
 	'pytest'
 ]
 
-# autodoc_default_options = {
-#     'members':         True,
-#     'member-order':    'bysource',
-#     'special-members': '__init__',
-# }
+autodoc_default_options = {
+    'members':         True,
+    'member-order':    'bysource',
+    'special-members': '__init__',
+}
