@@ -13,3 +13,5 @@ PBot's documentation is [available on readthedocs.io](https://pbot.readthedocs.i
 PBot uses GNU General Public License v3.
 
 sphinx-build -M html docs/source/ docs/build/
+
+readthedocstest
