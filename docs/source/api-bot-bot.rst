@@ -6,6 +6,10 @@ Bot Service: PBot Actual
    :undoc-members:
    :show-inheritance:
 
+.. autoclass::pbot.bot
+   :members:
+
+
 -----
 
 `Back to API <api.html>`_
