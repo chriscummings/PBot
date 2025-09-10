@@ -1,4 +1,4 @@
-Tranceiver Service Utils
+Tranceiver Service: Utils
 ################################
 
 .. automodule:: transceiver.utils
@@ -7,3 +7,5 @@ Tranceiver Service Utils
    :show-inheritance:
 
 -----
+
+.

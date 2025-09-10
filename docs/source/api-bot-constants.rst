@@ -1,4 +1,4 @@
-Bot Service Constants
+Bot Service: Constants
 ############################
 
 .. automodule:: pbot.constants
@@ -7,3 +7,5 @@ Bot Service Constants
    :show-inheritance:
 
 -----
+
+.

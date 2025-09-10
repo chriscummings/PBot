@@ -7,3 +7,5 @@ Middleware Base Class
    :show-inheritance:
 
 -----
+
+.

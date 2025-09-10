@@ -1,4 +1,4 @@
-Bot Service PBot Actual
+Bot Service: PBot Actual
 ############################
 
 .. automodule:: pbot.bot
@@ -7,3 +7,5 @@ Bot Service PBot Actual
    :show-inheritance:
 
 -----
+
+.

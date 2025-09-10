@@ -1,4 +1,4 @@
-Tranceiver Service Models
+Tranceiver Service: Models
 ################################
 
 .. automodule:: transceiver.models
@@ -7,3 +7,5 @@ Tranceiver Service Models
    :show-inheritance:
 
 -----
+
+.

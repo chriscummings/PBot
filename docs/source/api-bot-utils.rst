@@ -1,4 +1,4 @@
-Bot Service Utils
+Bot Service: Utils
 #####################
 
 .. automodule:: pbot.utils
@@ -7,3 +7,5 @@ Bot Service Utils
    :show-inheritance:
 
 -----
+
+.

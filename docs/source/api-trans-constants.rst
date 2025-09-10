@@ -1,4 +1,4 @@
-Tranceiver Service Constants
+Tranceiver Service: Constants
 ################################
 
 .. automodule:: transceiver.constants
@@ -7,3 +7,5 @@ Tranceiver Service Constants
    :show-inheritance:
 
 -----
+
+.

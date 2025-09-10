@@ -1,4 +1,4 @@
-Tranceiver Service Process Message
+Tranceiver Service: Process Message
 #####################################
 
 .. automodule:: transceiver.process_msg
@@ -7,3 +7,5 @@ Tranceiver Service Process Message
    :show-inheritance:
 
 -----
+
+.
