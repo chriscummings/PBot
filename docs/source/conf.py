@@ -87,7 +87,8 @@ autodoc_mock_imports = [
 	'openai',
 	'pytest',
     'redis',
-    'discord'
+    'discord',
+    'urllib'
 ]
 
 autodoc_default_options = {
