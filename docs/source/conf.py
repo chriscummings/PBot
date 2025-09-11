@@ -88,7 +88,8 @@ autodoc_mock_imports = [
 	'pytest',
     'redis',
     'discord',
-    'urllib'
+    'urllib',
+    'dotenv'
 ]
 
 autodoc_default_options = {
