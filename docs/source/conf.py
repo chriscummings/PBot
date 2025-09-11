@@ -86,7 +86,8 @@ autodoc_mock_imports = [
 	'tiktoken',
 	'openai',
 	'pytest',
-    'redis'
+    'redis',
+    'discord'
 ]
 
 autodoc_default_options = {
