@@ -10,6 +10,7 @@ html_theme_options = {
 
 
 # Include source folders.
+sys.path.insert(0, os.path.abspath('../..'))
 sys.path.insert(0, os.path.abspath('../../services/bot/src/'))
 sys.path.insert(0, os.path.abspath('../../services/bot/src/pbot/'))
 sys.path.insert(0, os.path.abspath('../../services/bot/src/pbot/middleware'))
