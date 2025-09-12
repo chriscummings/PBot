@@ -26,65 +26,53 @@ response:{resp_id} = {
 # Bot.
 # ------------------------------------------------------------------------------
 
-TRANSCEIVER_RESPONSE_DELAY = 2
-""" Delay between polling for new responses. """
+TRANSCEIVER_RESPONSE_DELAY: int = 2
+'''Delay between polling for new responses to send.'''
 
-RESPONSE_DELVE_TIME = timedelta(hours=1)
-""" How long ago to look for unsent responses. """
+RESPONSE_DELVE_TIME: timedelta = timedelta(hours=1)
+'''How long ago to look for unsent responses.'''
 
-# Redis.
+# System
+
+DISCORD_CHARACTER_LIMIT: int = 2000
+'''Discord message character limit'''
+
+# Redis
 # ------------------------------------------------------------------------------
 
-REDIS_MESSAGE_EXPIRE_SECONDS = 60*60*24*3
-""" How long to persist Discord messages. """
+REDIS_MESSAGE_EXPIRE_SECONDS: int = 25920060 # 3 Days
+'''How long to persist Discord messages in Redis.'''
 
-# Keys.
+# Keys
 
-REDIS_KEY_MESSAGES = "messages"
-""" Key for messages by timestamp """
+REDIS_KEY_MESSAGES: str = 'messages'
+'''Key for Messages'''
 
-REDIS_KEY_SERVERS = "servers"
-""" Key for server ids. """
+REDIS_KEY_SERVERS: str  = 'servers'
+'''Key for Servers'''
 
-REDIS_KEY_CHANNELS = "channels"
-""" Key for channel ids. """
+REDIS_KEY_CHANNELS : str = 'channels'
+'''Key for Channels'''
 
-REDIS_KEY_USERS = "users"
-""" Key for user ids. """
+REDIS_KEY_USERS: str  = 'users'
+'''Key for users'''
 
-REDIS_KEY_RESPONSES = "responses"
-""" Key for responses by timestamp. """
+REDIS_KEY_RESPONSES: str  = 'responses'
+'''Key for responses'''
 
-#-
+# Key-Prefixes
 
-REDIS_KEY_MESSAGE_PREFIX = "message"
-""" Key prefix for a message. """
+REDIS_KEY_MESSAGE_PREFIX: str = 'message'
+'''Key-prefix a Message'''
 
-REDIS_KEY_SERVER_PREFIX = "server"
-""" Key prefix for a server. """
+REDIS_KEY_SERVER_PREFIX: str = 'server'
+'''Key-prefix a Server'''
 
-REDIS_KEY_CHANNEL_PREFIX = "channel"
-""" Key prefix for a channel. """
+REDIS_KEY_CHANNEL_PREFIX: str = 'channel'
+'''Key-prefix a Channel'''
 
-REDIS_KEY_USER_PREFIX = "user"
-""" Key prefix for a user. """
+REDIS_KEY_USER_PREFIX: str = 'user'
+'''Key-prefix a user'''
 
-REDIS_KEY_RESPONSE_PREFIX = "response"
-""" Key prefix for a response. """
-
-
-
-
-
-
-
-
-
-
-
-
-# Other.
-# ------------------------------------------------------------------------------
-
-DISCORD_CHARACTER_LIMIT = 2000
-""" Discord message length limit. """
+REDIS_KEY_RESPONSE_PREFIX: str = 'response'
+'''Key-prefix a Response'''

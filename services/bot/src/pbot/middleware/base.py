@@ -2,21 +2,18 @@ from abc import ABC, abstractmethod
 
 
 class Middleware(ABC):
-    """Base class for Pbot Middleware.
-    """
+    '''Base class for Pbot Middleware.'''
 
     @abstractmethod
     def handle_messages(self, messages: list[dict]) -> list[dict]:
-        """Abstract method to override with your own business logic.
-
-        There is no promise the message history passed in will not be mutated.
+        '''Abstract method to override with your own.
 
         Args:
-            messages (list): A list of messages.
+            messages (list[dict]): A list of messages dictionaries.
 
         Returns:
-            list: A list of messages.
-        """
+            list[dict]: A list of messages dictionaries.
+        '''
         raise NotImplementedError
 
         return messages
