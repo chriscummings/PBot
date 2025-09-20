@@ -1,5 +1,8 @@
 # Local Development Python Requirements
 
-sphinx
-sphinx-autodoc-typehints
-shibuya
+# sphinx
+# sphinx-autodoc-typehints
+# shibuya
+
+mkdocs-material
+mkdocstrings-python

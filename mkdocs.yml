@@ -1,0 +1,102 @@
+site_name: PBot
+site_url: https://pbot.readthedocs.io/en/latest/
+theme:
+  favicon: assets/robot-outline.svg
+  icon:
+    logo: material/robot
+  name: material
+  palette:
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: green
+      accent: deep purple
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: blue
+      accent: deep orange
+  font:
+    text: Roboto
+    code: Red Hat Mono
+  features:
+    - navigation.path
+    - toc.follow
+    - navigation.top
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+    - search.share
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant
+    - navigation.instant.progress
+    - header.autohide
+    - navigation.footer
+    - navigation.tracking
+copyright: Copyright &copy; 2025 Chris Cummings
+repo_url: https://github.com/chriscummings/PBot
+extra:
+  social:
+extra_css:
+  - assets/stylesheets/z.css
+  - assets/stylesheets/landing.css
+plugins:
+  - search
+  - glightbox:
+      skip_classes:
+        - skip-lightbox
+  - mkdocstrings
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  # - mkdocs-glightbox
+  - attr_list
+  - md_in_html
+  - pymdownx.blocks.caption
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+nav:
+  - index.md
+  - Overview:
+      - overview/project.md
+      - overview/services.md
+  - Getting Started:
+      - getting-started/index.md
+      - getting-started/register-with-discord.md
+      - getting-started/running-pbot.md
+      - Additional Guides:
+        - getting-started/using-redis-insight.md
+  - Develop:
+    - develop/index.md
+    - develop/writing-middleware.md
+    - APIs:
+      - develop/models.md
+      - develop/bot/middleware.md
+      - Bot:
+        - develop/bot/bot.md
+        - develop/bot/utils.md
+        - develop/bot/constants.md
+      - Transceiver:
+        - develop/transceiver/index.md
+        - develop/transceiver/utils.md
+        - develop/transceiver/constants.md
+  - privacy.md

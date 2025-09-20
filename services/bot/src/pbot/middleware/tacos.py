@@ -6,33 +6,33 @@ from pbot.middleware.base import Middleware
 
 
 class TacoRecipes(Middleware):
-    """Taco Middleware!
+    '''Taco Middleware!
 
     This middleware is loaded by default and serves as an initial test of your
     bot's connection to a Discord server.
 
     Any mention of the word "taco" will be met with a random taco recipe.
-    """
+    '''
 
-    KEYWORDS = ["taco"]
+    KEYWORDS = ['taco']
 
     def __init__(self, redis: Redis) -> None:
-        """Constructor.
+        '''Constructor.
 
         Args:
-            redis (Redis): Redis connection.
-        """
+            redis (Redis): Redis connection
+        '''
         self.redis = redis
 
     def handle_messages(self, messages: list[dict]) -> list[dict]:
-        """Fires back a taco recipe at anyone bold enough to mention them!
+        '''Fires back a taco recipe at anyone bold enough to mention them!
 
         Args:
-            messages (list[dict]): A list of messages.
+            messages (list[dict]): List of message dicts
 
         Returns:
-            list[dict]: A list of messages.
-        """
+            list[dict]: List of message dicts
+        '''
 
         # Sort earliest messages first
         messages.sort(key=lambda m: float(m['time']))
@@ -60,7 +60,7 @@ class TacoRecipes(Middleware):
                         self.redis,
                         resp_id,
                         random.choice(TACO_RECIPES),
-                        message["id"])
+                        message['id'])
 
                     # Move on to next message.
                     break
