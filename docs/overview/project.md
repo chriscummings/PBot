@@ -1,5 +1,8 @@
 # Project Overview
 
+PBot is a Dockerized application consisting of two primary services:
+a **Transceiver service** that communicates with Discord and a **Bot service** that runs the middleware logic.
+
 ```mermaid
 ---
 title: PBot Flow
@@ -14,9 +17,9 @@ graph LR
   Middleware@{shape: processes}-->Bot[PBot Service];
   end
   style Docker fill: none, stroke-dasharray: 5 5
-
 ```
 
+PBot is built around the idea of middleware, similar to many MVC-style web frameworks. PBot's goal is to push the boring details of writing a chatbot to the periphery, allowing the developer to focus solely on the core logic of their bot within the middleware paradigm.
 ## Middleware
 
 Middleware is a stack of one or more modules that each can, in turn, act on the
