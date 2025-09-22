@@ -7,3 +7,4 @@
 mkdocs-material
 mkdocstrings-python
 mkdocs-glightbox
+mike
