@@ -17,7 +17,7 @@ pbot/
 
 In this tutorial, we will recreate the tacos middleware seen in the Getting Started section.
 
-## Create middleware--
+## Create middleware
 
 Create a class that inherits from Middleware and implements the handle_messages() function.
 

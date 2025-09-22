@@ -53,6 +53,7 @@ plugins:
         - skip-lightbox
   - mkdocstrings
 markdown_extensions:
+  - tables
   - admonition
   - pymdownx.details
   # - mkdocs-glightbox

@@ -30,11 +30,15 @@ In the root directory of PBot is a file named example.env. Create a copy of this
 
 Renaming example.env to .env may cause the file to disapear depending on your operating system. Filenames starting with a dot are conventionally understood to be hidden system files and many operating systems hide these files by default.
 
-    To show hidden files in OSX, press: Shift + Command + .
 
-    To show hidden files in Windows 10+, press: Ctrl + Shift + .
 
-    To show hidden files in most flavours of Linux, press: Ctrl + H
+__To show hidden files__
+
+| OS      | Keyboard Shortcut          |
+| ------- | -------------------------- |
+| OSX     | press: Shift + Command + . |
+| Windows | press: Ctrl + Shift + .    |
+| Linux   | press: Ctrl + H            |
 
 ## Running PBot
 
