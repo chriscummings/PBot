@@ -1,6 +1,6 @@
 # Writing Middleware
 
-This first step in writing custom middleware is to create a Python file in services/bot/src/pbot/middleware/
+This first step in writing custom middleware is to create a Python file in `services/bot/src/pbot/middleware/`
 
 ```text
 pbot/
