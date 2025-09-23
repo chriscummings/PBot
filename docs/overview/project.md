@@ -1,5 +1,11 @@
 # Project Overview
 
+!!! example
+
+    Warning: This is pre version 1 software (
+    --8<-- "version"
+    ).
+
 PBot is a Dockerized application consisting of two primary services:
 a **Transceiver service** that communicates with Discord and a **Bot service** that runs the middleware logic.
 
