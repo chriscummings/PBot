@@ -1,10 +1,12 @@
 from redis import Redis
+
 from pbot.middleware.base import Middleware
 from pbot.utils import count_tokens
 from pbot.constants import (
     REDIS_PROMPT_KEY,
     BOT_NAME,
     OPENAI_MAX_TOKENS,)
+
 
 class TrimMessagesByTokens(Middleware):
     '''Taking into account prompt, removes message history that would exceed
@@ -15,10 +17,14 @@ class TrimMessagesByTokens(Middleware):
         '''Constructor
 
         Args:
-            redis (Redis): Redis connection.
-            prompt_key (str): Redis prompt key.
-            max_tokens (int): Token limit to cull message history by.
+            redis (Redis): Redis connection
+            prompt_key (str): Redis prompt key
+            max_tokens (int): Token limit to cull message history by
+
+        Returns:
+            None
         '''
+
         self.prompt_key = prompt_key
         self.max_tokens = max_tokens
         self.redis = redis
@@ -27,12 +33,13 @@ class TrimMessagesByTokens(Middleware):
         '''Removes older messages that would exceed token length.
 
         Args:
-            messages (list): A list of messages.
-            token_limit (int): Limit to curtail history by.
+            messages (list): A list of messages
+            token_limit (int): Limit to curtail history by
 
         Returns:
             list: A list of messages.
         '''
+
         messages.sort(key=lambda m: float(m['time']), reverse=True) # descending
         token_count = 0
         cutoff_index = None

@@ -14,7 +14,7 @@ This document will guide you through getting a PBot instance up and running. It 
 
 	Generate an auth token and install link for your bot.
 
-    [:octicons-arrow-right-24: Register with Discord](register-with-discord)
+    [:octicons-arrow-right-24: Register with Discord](register-with-discord.md)
 
 -   __Step 2.__ Config and Run PBot (_8 min_)
 
@@ -22,7 +22,7 @@ This document will guide you through getting a PBot instance up and running. It 
 
 	Get your local copy of PBot up and running.
 
-    [:octicons-arrow-right-24: Run PBot](running-pbot)
+    [:octicons-arrow-right-24: Run PBot](running-pbot.md)
 </div>
 
 ------
@@ -30,5 +30,5 @@ This document will guide you through getting a PBot instance up and running. It 
 __Additional Guides__
 
 <div class="grid cards" markdown>
-- [Using Redis Insight](using-redis-insight)
+- [Using Redis Insight](using-redis-insight.md)
 </div>

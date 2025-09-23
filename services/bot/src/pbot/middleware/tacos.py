@@ -21,7 +21,11 @@ class TacoRecipes(Middleware):
 
         Args:
             redis (Redis): Redis connection
+
+        Returns:
+            None
         '''
+
         self.redis = redis
 
     def handle_messages(self, messages: list[dict]) -> list[dict]:

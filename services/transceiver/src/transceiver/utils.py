@@ -19,26 +19,30 @@ def intents() -> discord.Intents:
 	'''Returns a configured Intents object for a Discord a client.
 
     By default, a bot does not have access to messages or their contents.
-    Instead, permission has to be explicitly given to the bot for access to
-    that information.
-    See docs:
-    https://discordpy.readthedocs.io/en/stable/intents.html
+    Permission has to be explicitly given.
+
+    See docs: https://discordpy.readthedocs.io/en/stable/intents.html
 
     Returns:
-        discord.Intents: A Discord intents object for client.
+        discord.Intents: Discord Intents object for client.
 	'''
+
 	intents = discord.Intents.default()
 	intents.messages = True
 	intents.message_content = True
 	return intents
 
 async def send_message(message: discord.Message, content: str) -> None:
-    '''Asynchronously sends response to a specific Discord message.
+    '''Asynchronously sends a response to a specific Discord message.
 
     Args:
-        message (discord.Message): Message to respond
-        content (str): Body
+        message (discord.Message): Discord message to respond
+        content (str): Response body
+
+    Returns:
+        None
     '''
+
     try:
         await message.reply(content)
     except Exception as error: # FIXME: too permissive--don't try forever
@@ -49,8 +53,12 @@ async def handle_response(discord_client: discord.Client, redis_conn: redis.Redi
 
     Args:
         response (dict[str, id]): Dictionary represensation
+
+    Returns:
+        None
     '''
-    # Dig up Discord message to respond to via API calls.
+
+    # Find Discord message to respond to via API calls.
     channel: Any = discord_client.get_channel(int(response['channel']))
     message: Any = channel.get_partial_message(int(response['message']))
 
@@ -71,21 +79,25 @@ async def handle_response(discord_client: discord.Client, redis_conn: redis.Redi
         'sent', str(datetime.now().timestamp())
     )
 
-def handle_message(redis_conn: redis.Redis, message: discord.Message) -> None:
+def handle_message(redis: redis.Redis, message: discord.Message) -> None:
     '''Handle an incoming Discord message.
 
     Args:
         redis (redis.Redis): Redis connection
         message (discord.Message): Discord Message
-    '''
-    logger.debug(format_message_for_log(message))
-    process_msg(redis_conn, message)
 
-def get_unsent_responses(redis_conn: redis.Redis) -> list[dict]:
-    '''Unsent responses.
+    Returns:
+        None
+    '''
+
+    logger.debug(format_message_for_log(message))
+    process_msg(redis, message)
+
+def get_unsent_responses(redis: redis.Redis) -> list[dict]:
+    '''Gets unsent responses waiting in Redis.
 
     Args:
-		redis_conn (redis.Redis): Redis connection
+		redis (redis.Redis): Redis connection
 
 	Returns:
 		list[dict]: A list of unsent response dicts
@@ -93,7 +105,7 @@ def get_unsent_responses(redis_conn: redis.Redis) -> list[dict]:
     cutoff = (datetime.now() - RESPONSE_DELVE_TIME).timestamp()
 
     # Get recent responses.
-    responses: Any = redis_conn.zrangebyscore(
+    responses: Any = redis.zrangebyscore(
         REDIS_KEY_RESPONSES, cutoff,
         '+inf',
         withscores=False)
@@ -103,29 +115,27 @@ def get_unsent_responses(redis_conn: redis.Redis) -> list[dict]:
     for mixed_key in responses: # response:<server_id>.<channel_id>.<user_id>-<response_id>
 
         # Remove prefix
-        mixed_key = mixed_key.replace(f"{REDIS_KEY_RESPONSE_PREFIX}:", "") # <server_id>.<channel_id>.<user_id>-<response_id>
+        mixed_key = mixed_key.replace(f'{REDIS_KEY_RESPONSE_PREFIX}:', '') # <server_id>.<channel_id>.<user_id>-<response_id>
 
         # Unpack ids from mixed key.
-        server_channel_user, resp_id = mixed_key.split("-") # "<server_id>.<channel_id>.<user_id>", "<response_id>"
-        server_id, channel_id, user_id = server_channel_user.split(".") # ""<server_id>", "<channel_id>", "<user_id>"
+        server_channel_user, resp_id = mixed_key.split('-') # "<server_id>.<channel_id>.<user_id>", "<response_id>"
+        server_id, channel_id, user_id = server_channel_user.split('.') # ""<server_id>", "<channel_id>", "<user_id>"
 
         # Pull related objects.
         # TODO: Handle missing...
-        response = redis_conn.hgetall(f"{REDIS_KEY_RESPONSE_PREFIX}:{resp_id}")
-        server = redis_conn.hgetall(f"server:{server_id}")
-        channel = redis_conn.hgetall(f"channel:{channel_id}")
-        user = redis_conn.hgetall(f"user:{user_id}")
+        response = redis.hgetall(f'{REDIS_KEY_RESPONSE_PREFIX}:{resp_id}')
+        server = redis.hgetall(f'server:{server_id}')
+        channel = redis.hgetall(f'channel:{channel_id}')
+        user = redis.hgetall(f'user:{user_id}')
 
         # Handle an unsent response.
-        if response and (response["sent"] == None or response["sent"] == ""):
-
-            print("-")
+        if response and (response['sent'] == None or response['sent'] == ''):
 
             # Ensure Server, Channel, and User are allowed responses.
             if all([
-                int(server["respond"]) == 1,
-                int(channel["respond"]) == 1,
-                int(user["respond"]) == 1
+                int(server['respond']) == 1,
+                int(channel['respond']) == 1,
+                int(user['respond']) == 1
             ]): # FIXME: handle ignored responses clogging queue.
                 unsent.append(response)
 
@@ -138,8 +148,9 @@ def format_message_for_log(message: discord.Message) -> str:
         message (discord.Message): Discord Message
 
     Returns:
-        str: Formatted Message
+        str: Formatted Message object
     '''
+
     # Log statement template.
     tremplate = '{created}|{msg_id}|{server}.{channel}|{author}({nick}):{content}'
 
@@ -158,12 +169,13 @@ def chunk_str(string: str, size: int) -> list[str]:
     '''Breaks string up on whitespace by chunk size.
 
     Args:
-		string (str): String to chunk.
+		string (str): String to chunk
         size (int): Character length to chunk by
 
     Returns:
 		list[str]: A list of strings
     '''
+
     if len(string) > size:
         all_chunks = []
         current_line = ''

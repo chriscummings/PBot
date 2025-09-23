@@ -11,9 +11,9 @@ from pbot.constants import REDIS_CHANNEL_KEY_PREFIX
 from pbot.constants import REDIS_MESSAGES_KEY
 from pbot.constants import REDIS_MESSAGE_KEY_PREFIX
 
-# TODO: just nename to message_ids ?
+# TODO: rename to message_ids ?
 def channel_message_ids(redis: Redis, channel_id: str, hours: int=1, mins: int=0) -> Any:
-    '''Returns a list of message ids from a channel within a timeframe.
+    '''Returns a list of message ids from a channel within timeframe.
 
     Args:
         redis (Redis): Redis connection
@@ -22,7 +22,7 @@ def channel_message_ids(redis: Redis, channel_id: str, hours: int=1, mins: int=0
         mins (int): include messages
 
     Returns:
-        list: List of message ids (strings).
+        list: List of message ids (strings)
     '''
     msg_key = f'{REDIS_CHANNEL_KEY_PREFIX}:{channel_id}:{REDIS_MESSAGES_KEY}'
 
@@ -36,11 +36,14 @@ def mark_as_read(redis: Redis, messages: list[dict]) -> None:
     Args:
         redis (Redis): Redis connection
         messages (list): List of messages to be marked
+
+    Returns:
+        None
     '''
     for message in messages:
         redis.json().set(
             f'{REDIS_MESSAGE_KEY_PREFIX}:{message["id"]}',
-            ".read",
+            '.read',
             datetime.now().timestamp())
 
 def active_channels(redis: Redis, hours: int=1, mins: int=0) -> list[str]:
@@ -65,7 +68,8 @@ def active_channels(redis: Redis, hours: int=1, mins: int=0) -> list[str]:
     return list(channels)
 
 def count_tokens(input: str, encoding: str=DEFAULT_TOKEN_ENCODING) -> int:
-    '''Tokens in a string.
+    '''(DEPRECATED: Will be moved to OpenAi-middleware.)
+    Tokens in a string.
 
     Args:
         input (str): Sting to count
@@ -104,6 +108,9 @@ def create_response(redis: Redis, resp_id: str, content: str, msg_id: str) -> No
         resp_id (str): Id for response
         content (str): Response content
         msg_id (str): Message id responding to
+
+    Returns:
+        None
     '''
     # Get message responding to.
     key_message = get_messages(redis, [msg_id])[0]
@@ -130,7 +137,8 @@ def create_response(redis: Redis, resp_id: str, content: str, msg_id: str) -> No
     redis.json().set(f'{REDIS_MESSAGE_KEY_PREFIX}:{msg_id}', '.response', resp_id)
 
 def is_refusal(content: str) -> bool:
-    '''Was a AI refusal.
+    '''(DEPRECATED: Will be moved to OpenAi-middleware.)
+    Was a AI refusal.
 
     Args:
         content (str): String
@@ -147,7 +155,7 @@ def is_refusal(content: str) -> bool:
         'As a large language model',
         'as a llm',
         'As an AI language model',
-        'I apologize, but',]
+        'I apologize, but']
 
     for substring in refusal_substrings:
         if substring.lower() in content.lower():

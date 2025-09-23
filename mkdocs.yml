@@ -1,6 +1,7 @@
 site_name: PBot
 site_url: https://pbot.readthedocs.io/en/latest/
 theme:
+  custom_dir: docs/overrides
   favicon: assets/robot-outline.svg
   icon:
     logo: material/robot
@@ -65,7 +66,12 @@ plugins:
   - glightbox:
       skip_classes:
         - skip-lightbox
-  - mkdocstrings
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+
 markdown_extensions:
   - tables
   - admonition
