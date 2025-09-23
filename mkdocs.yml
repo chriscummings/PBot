@@ -42,6 +42,11 @@ theme:
 copyright: Copyright &copy; 2025 Chris Cummings
 repo_url: https://github.com/chriscummings/PBot
 extra:
+  version:
+    provider: mike
+    alias: true
+    default:
+      - latest
   social:
 extra_css:
   - assets/stylesheets/z.css

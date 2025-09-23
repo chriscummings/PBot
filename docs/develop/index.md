@@ -3,6 +3,11 @@
 This section will cover writing your own custom middleware and the API of
 PBot.
 
+[Download by Version](https://github.com/chriscummings/PBot/releases)
+
+
+
+
 **Starting Points**
 
 <div class="grid cards" markdown>
