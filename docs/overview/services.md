@@ -1,6 +1,6 @@
 # Services
 
-### Tranciever Service
+### Tranceiver Service
 
 A lightweight, event-driven service meant to transmit responses to and from Discord. If you don’t need to modify the models stored in Redis, you won’t need to delve into the transceiver service.
 
