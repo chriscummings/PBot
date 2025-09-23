@@ -14,6 +14,7 @@ from transceiver.constants import (
     RESPONSE_DELVE_TIME
 )
 
+
 def intents() -> discord.Intents:
 	'''Returns a configured Intents object for a Discord a client.
 

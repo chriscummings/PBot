@@ -30,5 +30,5 @@ This document will guide you through getting a PBot instance up and running. It 
 __Additional Guides__
 
 <div class="grid cards" markdown>
-- [:fontawesome-brands-js: __Using Redis Insight__](using-redis-insight)
+- [Using Redis Insight](using-redis-insight)
 </div>

@@ -1,6 +1,4 @@
 '''Converts a Discord message to our internal models and writes them to Redis.
-
-TODO: REFECTOR THIS!!!
 '''
 
 from urllib.parse import urlparse

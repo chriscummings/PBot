@@ -1,6 +1,5 @@
-"""
-Tranceiver-service logging to both stdout and file.
-"""
+'''Tranceiver-service logging to both stdout and file.
+'''
 
 import logging
 import os
@@ -11,7 +10,7 @@ load_dotenv()
 
 # Params -----------------------------------------------------------------------
 
-FILENAME          = "xceiver.log"
+FILENAME          = 'transceiver.log'
 NAME              = os.path.basename(FILENAME)
 FILE_LOG_LEVEL    = logging.NOTSET
 CONSOLE_LOG_LEVEL = FILE_LOG_LEVEL
@@ -24,7 +23,7 @@ logger = logging.getLogger(NAME)
 logging.root.setLevel(logging.NOTSET)
 
 c_handler = logging.StreamHandler()
-f_handler = logging.FileHandler(os.path.join("./", FILENAME))
+f_handler = logging.FileHandler(os.path.join('./', FILENAME))
 
 c_handler.setLevel(CONSOLE_LOG_LEVEL)
 f_handler.setLevel(FILE_LOG_LEVEL)

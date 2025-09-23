@@ -1,7 +1,7 @@
-"""Transceiver-based Models.
+'''Transceiver-based Models.
 
 This is a temporary implementation. A shim-layer.
-"""
+'''
 
 from typing import Any
 

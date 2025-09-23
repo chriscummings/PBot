@@ -3,26 +3,6 @@ from datetime import datetime
 from datetime import timedelta
 
 
-"""
-messages = []
-servers
-channels
-users
-responses = [{server_id}.{channel_id}.{user_id}-{resp_id}, timestamp]
-
-
-response:{resp_id} = {
-	"id": {resp_id}
-	"user": None,
-	"content": None,
-	"message": None,
-	"channel": None,
-	"server": None,
-	"sent": "",
-	"time": None
-}
-"""
-
 # Bot.
 # ------------------------------------------------------------------------------
 

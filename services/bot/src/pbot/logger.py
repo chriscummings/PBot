@@ -1,12 +1,13 @@
-"""Bot-service logging to both stdout and file."""
+'''Bot-service logging to both stdout and file.
+'''
 
 import os
 import logging
 
 
 # Params -----------------------------------------------------------------------
-FILENAME          = "pbot-bot.log"
-PATH              = os.path.join("./", FILENAME)
+FILENAME          = 'bot.log'
+PATH              = os.path.join('./', FILENAME)
 NAME              = os.path.basename(FILENAME)
 FILE_LOG_LEVEL    = logging.NOTSET
 CONSOLE_LOG_LEVEL = FILE_LOG_LEVEL
@@ -15,11 +16,12 @@ CONSOLE_FORMAT    = '%(name)s - %(levelname)s - %(message)s'
 # -----------------------------------------------------------------------------/
 
 def get_logger() -> logging.Logger:
-	"""Returns a bespoke logger.
+	'''Returns a bespoke logger.
 
 	Returns:
 		Logger: A service-configured logger.
-	"""
+	'''
+
 	logger = logging.getLogger(NAME)
 	logging.root.setLevel(logging.NOTSET)
 

@@ -2,9 +2,10 @@
 
 One of the services provided with PBot is Redis Insight. Redis Insight is a GUI for the Redis database at the center of PBot. To access Redis Insight, navigate to localhost:5540 in your browser.
 
-[Redis.io Official Insight Docs](https://redis.io/docs/latest/develop/tools/insight/)
+## Additional Insight Resources
 
-[Download at redis.io/insight](https://redis.io/insight/)
+- [Redis Insight Official Docs](https://redis.io/docs/latest/develop/tools/insight/)
+- [Redis Insight Official Docs: Overview](https://redis.io/docs/latest/develop/tools/insight/#overview) - Provides an intro to navigating Redis Insight.
 
 ## EULA
 
@@ -91,9 +92,3 @@ Taco Lover’s Response
 </figure>
 
 Redis Insight is pretty straightforward. A better understanding of PBot’s inner workings and the models involved will make navigating Redis Insight ever more intuitive.
-
-## Additional Insight Resources
-
-- [Redis Insight Official Docs](https://redis.io/docs/latest/develop/tools/insight/)
-- [Redis Insight Official Docs: Overview](https://redis.io/docs/latest/develop/tools/insight/#overview) - Provides an intro to navigating Redis Insight.
-- Download at [redis.io/insight](https://redis.io/insight/)
