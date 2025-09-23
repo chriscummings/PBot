@@ -1,9 +1,15 @@
 # Development Overview
 
+**Current PBot Version:**
+--8<-- "version"
+
+[Download PBot by Version](https://github.com/chriscummings/PBot/releases){ .md-button .md-button--primary }
+
+-----
+
 This section will cover writing your own custom middleware and the API of
 PBot.
 
-[Download by Version](https://github.com/chriscummings/PBot/releases)
 
 
 
