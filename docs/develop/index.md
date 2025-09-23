@@ -3,7 +3,7 @@
 **Current PBot Version:**
 --8<-- "version"
 
-[Download PBot by Version](https://github.com/chriscummings/PBot/releases){ .md-button .md-button--primary }
+[:fontawesome-solid-download:  Download PBot by Version](https://github.com/chriscummings/PBot/releases){ .md-button .md-button--primary }
 
 -----
 
