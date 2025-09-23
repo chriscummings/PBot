@@ -17,13 +17,13 @@ PBot.
 **Starting Points**
 
 <div class="grid cards" markdown>
-- [Writing Custom Middleware](writing-middleware/)
+- [Writing Custom Middleware](writing-middleware.md)
 </div>
 
 <div class="grid cards" markdown>
-- [Middleware API](bot/middleware/)
+- [Middleware API](bot/middleware.md)
 </div>
 
 <div class="grid cards" markdown>
-- [Models API](models/)
+- [Models API](models.md)
 </div>

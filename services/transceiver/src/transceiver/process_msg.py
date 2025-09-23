@@ -38,12 +38,15 @@ def urls_from_string(string: str) -> list[str]:
 
     return urls
 
-def process_msg(redis_client: redis.Redis, message: discord.Message) -> None:
-    '''Persists a Discord Message to our own models in Redis.
+def process_msg(redis: redis.Redis, message: discord.Message) -> None:
+    '''Persists a Discord Message to PBot Message model in Redis.
 
     Args:
-        redis_client (redis.Redis): Redis connection
+        redis (redis.Redis): Redis connection
         message (discord.Message): Discord Message
+
+    Returns:
+        None
     '''
 
     message_id: str = str(message.id)
@@ -51,55 +54,55 @@ def process_msg(redis_client: redis.Redis, message: discord.Message) -> None:
 
     # Don't process existing messages. (This can occur when pulling historic
     # messages.)
-    if redis_client.exists(f'{REDIS_KEY_MESSAGE_PREFIX}:{message_id}'):
+    if redis.exists(f'{REDIS_KEY_MESSAGE_PREFIX}:{message_id}'):
         return
 
     # Handle author. -----------------------------------------------------------
     author_id = str(message.author.id)
 
-    if not redis_client.exists(f'{REDIS_KEY_USER_PREFIX}:{author_id}'):
+    if not redis.exists(f'{REDIS_KEY_USER_PREFIX}:{author_id}'):
         user_temp = User().mapping()
         user_temp['id'] = author_id
         user_temp['name'] = message.author.name
-        redis_client.hset(f'{REDIS_KEY_USER_PREFIX}:{author_id}', mapping=user_temp)
+        redis.hset(f'{REDIS_KEY_USER_PREFIX}:{author_id}', mapping=user_temp)
 
-        redis_client.sadd(REDIS_KEY_USERS, author_id)
+        redis.sadd(REDIS_KEY_USERS, author_id)
 
     # Handle server. -----------------------------------------------------------
     server_id = str(message.guild.id)
 
-    if not redis_client.exists(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}'):
+    if not redis.exists(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}'):
         server_temp = Server().mapping()
         server_temp['id'] = server_id
         server_temp['name'] = message.guild.name
-        redis_client.hset(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}', mapping=server_temp)
+        redis.hset(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}', mapping=server_temp)
 
-        redis_client.sadd(REDIS_KEY_SERVERS, server_id)
+        redis.sadd(REDIS_KEY_SERVERS, server_id)
 
     # Relations
-    redis_client.sadd(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}:{REDIS_KEY_USERS}', author_id)
-    redis_client.sadd(f'{REDIS_KEY_USER_PREFIX}:{author_id}:{REDIS_KEY_SERVERS}', server_id)
+    redis.sadd(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}:{REDIS_KEY_USERS}', author_id)
+    redis.sadd(f'{REDIS_KEY_USER_PREFIX}:{author_id}:{REDIS_KEY_SERVERS}', server_id)
 
     # Handle channel. ----------------------------------------------------------
     channel_id = str(message.channel.id)
 
-    if not redis_client.exists(f'{REDIS_KEY_CHANNEL_PREFIX}:{channel_id}'):
+    if not redis.exists(f'{REDIS_KEY_CHANNEL_PREFIX}:{channel_id}'):
         channel_temp = Channel().mapping()
         channel_temp['id'] = channel_id
         channel_temp['name'] = message.channel.name
         channel_temp['server_id'] = server_id
-        redis_client.hset(f'{REDIS_KEY_CHANNEL_PREFIX}:{channel_id}', mapping=channel_temp)
+        redis.hset(f'{REDIS_KEY_CHANNEL_PREFIX}:{channel_id}', mapping=channel_temp)
 
-        redis_client.sadd(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}:{REDIS_KEY_CHANNELS}', channel_id)
-        redis_client.sadd(REDIS_KEY_CHANNELS, channel_id)
+        redis.sadd(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}:{REDIS_KEY_CHANNELS}', channel_id)
+        redis.sadd(REDIS_KEY_CHANNELS, channel_id)
 
     # Relations
-    redis_client.sadd(f'{REDIS_KEY_CHANNEL_PREFIX}:{channel_id}:{REDIS_KEY_USERS}', author_id)
-    redis_client.sadd(f'{REDIS_KEY_USERS}:{author_id}:{REDIS_KEY_CHANNELS}', channel_id)
+    redis.sadd(f'{REDIS_KEY_CHANNEL_PREFIX}:{channel_id}:{REDIS_KEY_USERS}', author_id)
+    redis.sadd(f'{REDIS_KEY_USERS}:{author_id}:{REDIS_KEY_CHANNELS}', channel_id)
 
     # Handle message. ----------------------------------------------------------
 
-    redis_client.zadd(REDIS_KEY_MESSAGES, {f'{server_id}.{channel_id}-{message_id}': msg_created_timestamp})
+    redis.zadd(REDIS_KEY_MESSAGES, {f'{server_id}.{channel_id}-{message_id}': msg_created_timestamp})
 
     # Handle occasional/changing server-based nick
     nick_name = ''
@@ -112,9 +115,9 @@ def process_msg(redis_client: redis.Redis, message: discord.Message) -> None:
         avatar = message.author.display_avatar
 
     # Relations
-    redis_client.zadd(f'{REDIS_KEY_USER_PREFIX}:{author_id}:{REDIS_KEY_MESSAGES}', {message_id: msg_created_timestamp})
-    redis_client.zadd(f'{REDIS_KEY_CHANNEL_PREFIX}:{channel_id}:{REDIS_KEY_MESSAGES}', {message_id: msg_created_timestamp})
-    redis_client.zadd(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}:{REDIS_KEY_MESSAGES}', {message_id: msg_created_timestamp})
+    redis.zadd(f'{REDIS_KEY_USER_PREFIX}:{author_id}:{REDIS_KEY_MESSAGES}', {message_id: msg_created_timestamp})
+    redis.zadd(f'{REDIS_KEY_CHANNEL_PREFIX}:{channel_id}:{REDIS_KEY_MESSAGES}', {message_id: msg_created_timestamp})
+    redis.zadd(f'{REDIS_KEY_SERVER_PREFIX}:{server_id}:{REDIS_KEY_MESSAGES}', {message_id: msg_created_timestamp})
 
     # Copy & mod message template
     msg_temp = Message().mapping()
@@ -146,5 +149,5 @@ def process_msg(redis_client: redis.Redis, message: discord.Message) -> None:
 
     # Store & expire.
     key = f'{REDIS_KEY_MESSAGE_PREFIX}:{message_id}'
-    redis_client.json().set(key, Path.root_path(), msg_temp)
-    redis_client.expire(key, REDIS_MESSAGE_EXPIRE_SECONDS)
+    redis.json().set(key, Path.root_path(), msg_temp)
+    redis.expire(key, REDIS_MESSAGE_EXPIRE_SECONDS)

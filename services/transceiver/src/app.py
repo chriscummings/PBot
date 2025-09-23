@@ -20,8 +20,8 @@ from transceiver.utils import (
 )
 
 
-# Configure environment.
-# ------------------------------------------------------------------------------
+# Configure Environment
+#######################
 
 # Load required environment variables.
 load_dotenv()
@@ -30,24 +30,38 @@ REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
 
 # Set up clients.
-redis_client = Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
-discord_client = discord.Client(intents=intents())
 
-# Recurring tasks.
-# See: https://discordpy.readthedocs.io/en/stable/ext/tasks/index.html
-# ------------------------------------------------------------------------------
+redis_client = Redis(
+    host=REDIS_HOST,
+    port=REDIS_PORT,
+    decode_responses=True)
+
+discord_client = discord.Client(
+    intents=intents())
+
+
+# Recurring Tasks
+# See: discordpy.readthedocs.io/en/stable/ext/tasks/index.html
+##############################################################
 
 @tasks.loop(seconds=float(TRANSCEIVER_RESPONSE_DELAY))
 async def send_responses() -> None:
-    '''Send any waiting responses in Redis.'''
+    '''Sends any new responses in Redis.
+
+    Args:
+        None
+
+    Returns:
+        None
+    '''
 
     for unsent_response in get_unsent_responses(redis_client):
         await handle_response(discord_client, redis_client, unsent_response)
 
 
-# Handle Discord events.
-# See: https://discordpy.readthedocs.io/en/stable/api.html#event-reference
-# ------------------------------------------------------------------------------
+# Handle Discord Events
+# See: discordpy.readthedocs.io/en/stable/api.html#event-reference
+##################################################################
 
 @discord_client.event
 async def on_ready() -> None:
@@ -67,6 +81,7 @@ async def on_message(message: discord.Message) -> None:
     '''
     handle_message(redis_client, message)
 
-# Run the client.
+
+# Run the Client
 if __name__ == '__main__':
     discord_client.run(DISCORD_TOKEN)

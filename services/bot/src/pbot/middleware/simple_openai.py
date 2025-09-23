@@ -30,7 +30,11 @@ class SimpleOpenAiResponseMiddleware(Middleware):
             api_key (str): OpenAI API key.
             logger (Logger): logger instance.
             prompt_key (string): Redis key used prompt.
+
+        Returns:
+            None
         '''
+
         self.openai_client = OpenAI(api_key=api_key)
         self.prompt_key = prompt_key
         self.redis = redis
@@ -49,6 +53,7 @@ class SimpleOpenAiResponseMiddleware(Middleware):
         Returns:
             tuple: A tuple (%chance, key_message_id).
         '''
+
         rtn_val = (0, None)
 
         # Bounce on no messages.
@@ -140,7 +145,11 @@ class SimpleOpenAiResponseMiddleware(Middleware):
             messages (list): A list of messages.
             target_id (str): Message ID to be focus of completion.
             prompt (str): A prompt for the AI.
+
+        Returns:
+            None
         '''
+
         completetion = None
 
         try:

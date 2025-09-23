@@ -17,23 +17,32 @@ class PBot:
     '''
 
     middlewares: list[Middleware] = []
-    '''Middleware to pass message history through'''
+    '''Middleware to pass message history'''
 
     def __init__(self, redis: Redis, logger: Logger) -> None:
-        '''
+        '''PBot constructor.
+
         Args:
             redis (Redis): Redis connection
             logger (Logger): Logger
+
+        Returns:
+            None
         '''
+
         self.redis = redis
         self.logger = logger
 
     def add_middleware(self, middleware: Middleware) -> None:
-        '''Add middleware to bot.
+        '''Adds middleware to bot.
 
         Args:
-            middleware (Middleware): Middleware to load load
+            middleware (Middleware): Middleware to load
+
+        Returns:
+            None
         '''
+
         self.middlewares.append(middleware)
 
     def handle_messages(self, messages: list[dict]) -> None:
@@ -41,26 +50,33 @@ class PBot:
 
         Args:
             messages (list): List of message dicts
+
+        Returns:
+            None
         '''
+
         message_buffer = messages
         for middleware in self.middlewares:
             message_buffer = middleware.handle_messages(message_buffer)
 
     def run(self) -> NoReturn:
-        '''Endlessly loops bot over recently active channels.'''
+        '''Endlessly loops bot over recently active channels.
+
+        Returns:
+            None
+        '''
 
         while True:
-
             for channel_id in active_channels(
                     self.redis,
                     hours=constants.ACTIVE_CHANNEL_CUTOFF_HOURS):
 
                 # Skip ignored channels.
                 channel = self.redis.hgetall(
-                    f"{constants.REDIS_CHANNEL_KEY_PREFIX}:{channel_id}"
+                    f'{constants.REDIS_CHANNEL_KEY_PREFIX}:{channel_id}'
                 )
 
-                if int(channel["parse"]) != 1:
+                if int(channel['parse']) != 1:
                     continue
 
                 # Fetch message history.

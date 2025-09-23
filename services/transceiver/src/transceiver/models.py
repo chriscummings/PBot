@@ -1,6 +1,7 @@
-'''Transceiver-based Models.
+'''Models (Shared across services)
 
-This is a temporary implementation. A shim-layer.
+This is a temporary implementation. A shim-layer to be replaced bt Pydantic
+models pre version 1.
 '''
 
 from typing import Any

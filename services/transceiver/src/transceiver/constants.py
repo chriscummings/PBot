@@ -1,10 +1,10 @@
 import os
-from datetime import datetime
-from datetime import timedelta
+from datetime import (
+	datetime,
+	timedelta)
 
-
-# Bot.
-# ------------------------------------------------------------------------------
+# Bot
+#####
 
 TRANSCEIVER_RESPONSE_DELAY: int = 2
 '''Delay between polling for new responses to send.'''
@@ -18,7 +18,7 @@ DISCORD_CHARACTER_LIMIT: int = 2000
 '''Discord message character limit'''
 
 # Redis
-# ------------------------------------------------------------------------------
+#######
 
 REDIS_MESSAGE_EXPIRE_SECONDS: int = 25920060 # 3 Days
 '''How long to persist Discord messages in Redis.'''

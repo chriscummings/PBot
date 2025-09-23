@@ -15,15 +15,27 @@ class ReloadPrompt(Middleware):
 
         Args:
             redis (Redis): Redis connection.
-            file_path (str): Path to prompt text file.
-            prompt_key (str): Redis prompt key.
+            file_path (str): Path to prompt text file
+            prompt_key (str): Redis prompt key
+
+        Returns:
+            None
         '''
+
         self.redis = redis
         self.path = file_path
         self.prompt_key = prompt_key
 
     def __reload_prompt_from_file(self) -> None:
-        '''Simply reads file contents into Redis prompt key.'''
+        '''Simply reads file contents into Redis prompt key.
+
+        Args:
+            None
+
+        Returns:
+            None
+        '''
+
         try:
             with open(self.path, 'r') as f:
                 self.redis.set(self.prompt_key, f.read())
