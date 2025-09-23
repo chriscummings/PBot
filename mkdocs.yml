@@ -10,13 +10,13 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Dark mode
-      primary: green
+      primary: blue
       accent: deep orange
     - scheme: default
       toggle:
         icon: material/weather-night
         name: Light mode
-      primary: green
+      primary: blue
       accent: deep orange
   font:
     text: Roboto
@@ -49,7 +49,7 @@ extra:
       - latest
   social:
 extra_css:
-  - assets/stylesheets/z.css
+  - assets/stylesheets/style.css
   - assets/stylesheets/landing.css
 plugins:
   - mike:
