@@ -42,25 +42,11 @@ theme:
 copyright: Copyright &copy; 2025 Chris Cummings
 repo_url: https://github.com/chriscummings/PBot
 extra:
-  version:
-    provider: mike
-    alias: true
-    default:
-      - latest
   social:
 extra_css:
   - assets/stylesheets/style.css
   - assets/stylesheets/landing.css
 plugins:
-  - mike:
-      # These fields are all optional; the defaults are as below...
-      alias_type: symlink
-      redirect_template: null
-      deploy_prefix: ''
-      canonical_version: null
-      version_selector: true
-      css_dir: css
-      javascript_dir: js
   - search
   - glightbox:
       skip_classes:
