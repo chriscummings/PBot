@@ -67,8 +67,9 @@ def active_channels(redis: Redis, hours: int=1, mins: int=0) -> list[str]:
         channels.add(channel_id)
     return list(channels)
 
+# TODO: Move to OpenAi middleware
 def count_tokens(input: str, encoding: str=DEFAULT_TOKEN_ENCODING) -> int:
-    '''(DEPRECATED: Will be moved to OpenAi-middleware.)
+    '''(DEPRECATION WARNING: Will be moved to OpenAi-middleware.)
     Tokens in a string.
 
     Args:
@@ -100,12 +101,12 @@ def get_messages(redis: Redis, ids: list[str]) -> list[dict]:
 
     return messages
 
-def create_response(redis: Redis, resp_id: str, content: str, msg_id: str) -> None:
+def create_response(redis: Redis, id: str, content: str, msg_id: str) -> None:
     '''Creates a response entry in Redis.
 
     Args:
         redis (Redis): Redis connection
-        resp_id (str): Id for response
+        id (str): Id for response
         content (str): Response content
         msg_id (str): Message id responding to
 
@@ -121,7 +122,7 @@ def create_response(redis: Redis, resp_id: str, content: str, msg_id: str) -> No
 
     # Create response entry.
     mapping:dict = Response().mapping()
-    mapping['id'] = resp_id
+    mapping['id'] = id
     mapping['user'] = user_id
     mapping['content'] = content
     mapping['message'] = msg_id
@@ -129,15 +130,15 @@ def create_response(redis: Redis, resp_id: str, content: str, msg_id: str) -> No
     mapping['server'] = server_id
     mapping['time'] = datetime.now().timestamp()
 
-    redis.hset(f'{REDIS_RESPONSE_KEY_PREFIX}:{resp_id}', mapping=mapping)
+    redis.hset(f'{REDIS_RESPONSE_KEY_PREFIX}:{id}', mapping=mapping)
 
     # Create links to response entry.
-    k = f'{server_id}.{channel_id}.{user_id}-{resp_id}'
+    k = f'{server_id}.{channel_id}.{user_id}-{id}'
     redis.zadd(REDIS_RESPONSES_KEY, {k: datetime.now().timestamp()})
-    redis.json().set(f'{REDIS_MESSAGE_KEY_PREFIX}:{msg_id}', '.response', resp_id)
+    redis.json().set(f'{REDIS_MESSAGE_KEY_PREFIX}:{msg_id}', '.response', id)
 
 def is_refusal(content: str) -> bool:
-    '''(DEPRECATED: Will be moved to OpenAi-middleware.)
+    '''(DEPRECATION WARNING: Will be moved to OpenAi-middleware.)
     Was a AI refusal.
 
     Args:

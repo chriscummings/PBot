@@ -14,7 +14,7 @@ from transceiver.constants import (
     RESPONSE_DELVE_TIME
 )
 
-
+# TODO: Document modifying these.
 def intents() -> discord.Intents:
 	'''Returns a configured Intents object for a Discord a client.
 
@@ -49,7 +49,7 @@ async def send_message(message: discord.Message, content: str) -> None:
         logger.error(error)
 
 async def handle_response(discord_client: discord.Client, redis_conn: redis.Redis, response: dict[str, any]) -> None:
-    '''Asynchronously handles sending single/multi-part messages to Discord.
+    '''Asynchronously send a single/multi-part message to Discord.
 
     Args:
         response (dict[str, id]): Dictionary represensation
@@ -80,7 +80,7 @@ async def handle_response(discord_client: discord.Client, redis_conn: redis.Redi
     )
 
 def handle_message(redis: redis.Redis, message: discord.Message) -> None:
-    '''Handle an incoming Discord message.
+    '''Process an incoming Discord message.
 
     Args:
         redis (redis.Redis): Redis connection
@@ -93,14 +93,16 @@ def handle_message(redis: redis.Redis, message: discord.Message) -> None:
     logger.debug(format_message_for_log(message))
     process_msg(redis, message)
 
+# TODO: rename unsent_responses
 def get_unsent_responses(redis: redis.Redis) -> list[dict]:
-    '''Gets unsent responses waiting in Redis.
+    '''(DEPRECATION WARNING: renaming to unsent_responses.) Gets unsent
+    responses waiting in Redis.
 
     Args:
 		redis (redis.Redis): Redis connection
 
 	Returns:
-		list[dict]: A list of unsent response dicts
+	    list[dict]: A list of unsent response dicts
     '''
     cutoff = (datetime.now() - RESPONSE_DELVE_TIME).timestamp()
 
@@ -142,7 +144,8 @@ def get_unsent_responses(redis: redis.Redis) -> list[dict]:
     return unsent
 
 def format_message_for_log(message: discord.Message) -> str:
-    '''String representation of Discord Message.
+    '''(DEPRECATION WARNING: will add to_s() method to Message instead.) String
+    representation of Discord Message.
 
     Args:
         message (discord.Message): Discord Message
@@ -166,7 +169,9 @@ def format_message_for_log(message: discord.Message) -> str:
     return tremplate
 
 def chunk_str(string: str, size: int) -> list[str]:
-    '''Breaks string up on whitespace by chunk size.
+    '''Breaks string on spaces by maximum character length. Useful for breaking
+    responses by character limits.
+
 
     Args:
 		string (str): String to chunk
@@ -177,7 +182,7 @@ def chunk_str(string: str, size: int) -> list[str]:
     '''
 
     if len(string) > size:
-        all_chunks = []
+        chunks = []
         current_line = ''
         words = string.split(' ')
 
@@ -192,12 +197,12 @@ def chunk_str(string: str, size: int) -> list[str]:
                     current_line += ' '+str(word)
             # Otherwise, start a new chunk
             else:
-                all_chunks.append(current_line)
+                chunks.append(current_line)
                 current_line = str(word)
 
         # Append last chunk segment.
-        all_chunks.append(current_line)
+        chunks.append(current_line)
 
-        return all_chunks
+        return chunks
 
     return [string]
