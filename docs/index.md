@@ -25,9 +25,6 @@ It means to abstract away everything but the fun parts of building a chatbot.
 Anyone who wants to set up a private bot with minimal fuss. PBot is a
 very simple platform, limited only by your imagination. PBot is optimized for ease of use
 and experimentation; it only requires a basic understanding of Python to modify.
-There is no need for fancy hosting; you can run a fleet of them on a spare
-Raspberry Pi.
-
 ## Is this Related to AI?
 
 The earliest version of PBot relied on OpenAI's API (ChatGPT) to provide
