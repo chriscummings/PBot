@@ -57,12 +57,12 @@ class TacoRecipes(Middleware):
                 if keyword.lower() in message['content'].lower():
 
                     # Create a unique, arbitrary GUID for the response
-                    resp_id = f'taco{datetime.now().timestamp()}'
+                    id = f'taco{datetime.now().timestamp()}'
 
                     # Preach the gospel of tacos.
                     create_response(
                         self.redis,
-                        resp_id,
+                        id,
                         random.choice(TACO_RECIPES),
                         message['id'])
 
