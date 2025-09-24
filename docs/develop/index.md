@@ -7,7 +7,7 @@
 
 -----
 
-This section will cover writing your own custom middleware and the API of
+This section will cover writing your own custom middleware agaist the API of
 PBot.
 
 
