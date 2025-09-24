@@ -101,6 +101,9 @@ At this point, if you check your Discord server, your bot should be listed as lo
     </figcaption>
 </figure>
 
+
+### Send a Test Message
+
 You can test it by any mention of the word ‘taco.’
 
 <figure markdown="span">
