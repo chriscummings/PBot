@@ -38,25 +38,25 @@ class TacoRecipes(Middleware):
             list[dict]: List of message dicts
         '''
 
-        # Sort earliest messages first
+        # Sort earliest messages first.
         messages.sort(key=lambda m: float(m['time']))
 
         for message in messages:
 
-            # Don't respond to bot messages
+            # Don't respond to bot messages.
             if int(message['user']['bot']) == 1:
                 continue
 
-            # Don't respond to already responded-to messages
+            # Don't respond to already responded messages.
             if message['response']:
                 continue
 
             for keyword in self.KEYWORDS:
 
-                # Respond if keyword is found in the message
+                # Respond if keyword is found in the message.
                 if keyword.lower() in message['content'].lower():
 
-                    # Create a unique, arbitrary GUID for the response
+                    # Create a unique, arbitrary GUID for the response.
                     id = f'taco{datetime.now().timestamp()}'
 
                     # Preach the gospel of tacos.

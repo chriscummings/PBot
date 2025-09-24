@@ -120,42 +120,39 @@ The code below does the following:
 At the end of the middleware chain, each message in the list is marked as read.
 
 ```py title="tacos.py"
+# Sort earliest messages first.
+messages.sort(key=lambda m: float(m['time']))
 
-def handle_messages(self, messages: list[dict]) -> list[dict]:
+for message in messages:
 
-  # Sort earliest messages first
-  messages.sort(key=lambda m: float(m['time']))
-
-  for message in messages:
-
-    # Don't respond to bot messages
+    # Don't respond to bot messages.
     if int(message['user']['bot']) == 1:
-      continue
+        continue
 
-    # Don't respond to already responded messages
+    # Don't respond to already responded messages.
     if message['response']:
-      continue
+        continue
 
     for keyword in self.KEYWORDS:
 
-      # Respond if a keyword is found in the message
-      if keyword.lower() in message['content'].lower():
+        # Respond if keyword is found in the message.
+        if keyword.lower() in message['content'].lower():
 
-        # Create a unique, arbitrary GUID for the response
-        id = f'taco{datetime.now().timestamp()}'
+            # Create a unique, arbitrary GUID for the response.
+            id = f'taco{datetime.now().timestamp()}'
 
-        # Create a response about the gospel of tacos
-        create_response(
-          self.redis,
-          id,
-          random.choice(TACO_RECIPES),
-          message["id"])
+            # Preach the gospel of tacos.
+            create_response(
+                self.redis,
+                id,
+                random.choice(TACO_RECIPES),
+                message['id'])
 
-        # Move on to any additional messages
-        break
+            # Move on to next message.
+            break
 
-  # Return message list to any follow-on middleware to handle.
-  return messages
+# Return messages for any follow-on middleware to handle.
+return messages
 ```
 
 !!! note "A timestamp as a UID isn't the ideal solution. This will be patched 1.0."
@@ -181,7 +178,7 @@ from pbot.middleware.tacos import TacoRecipes
 ```
 
 
-### Load the Middleware Module
+### Add the Middleware Module
 
 Add middleware to the bot with the `add_middleware()` method.
 

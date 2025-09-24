@@ -26,13 +26,13 @@ REDIS_MESSAGE_EXPIRE_SECONDS: int = 25920060 # 3 Days
 # Keys
 
 REDIS_KEY_MESSAGES: str = 'messages'
-'''Key for Messages'''
+'''Key for messages'''
 
 REDIS_KEY_SERVERS: str  = 'servers'
-'''Key for Servers'''
+'''Key for servers'''
 
 REDIS_KEY_CHANNELS : str = 'channels'
-'''Key for Channels'''
+'''Key for channels'''
 
 REDIS_KEY_USERS: str  = 'users'
 '''Key for users'''
@@ -43,16 +43,16 @@ REDIS_KEY_RESPONSES: str  = 'responses'
 # Key-Prefixes
 
 REDIS_KEY_MESSAGE_PREFIX: str = 'message'
-'''Key-prefix a Message'''
+'''Key-prefix for a Message'''
 
 REDIS_KEY_SERVER_PREFIX: str = 'server'
-'''Key-prefix a Server'''
+'''Key-prefix for a Server'''
 
 REDIS_KEY_CHANNEL_PREFIX: str = 'channel'
-'''Key-prefix a Channel'''
+'''Key-prefix for a Channel'''
 
 REDIS_KEY_USER_PREFIX: str = 'user'
-'''Key-prefix a user'''
+'''Key-prefix for a user'''
 
 REDIS_KEY_RESPONSE_PREFIX: str = 'response'
-'''Key-prefix a Response'''
+'''Key-prefix for a Response'''

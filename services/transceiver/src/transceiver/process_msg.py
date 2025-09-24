@@ -1,4 +1,4 @@
-'''Converts a Discord message to our internal models and writes them to Redis.
+'''Persists a Discord message to internal models.
 '''
 
 from urllib.parse import urlparse
@@ -8,16 +8,22 @@ import redis
 from redis.commands.json.path import Path
 import discord
 
-from transceiver.models import Server, Channel, User, Message, Attachment
-from transceiver.constants import REDIS_MESSAGE_EXPIRE_SECONDS
-from transceiver.constants import REDIS_KEY_MESSAGE_PREFIX
-from transceiver.constants import REDIS_KEY_MESSAGES
-from transceiver.constants import REDIS_KEY_USERS
-from transceiver.constants import REDIS_KEY_USER_PREFIX
-from transceiver.constants import REDIS_KEY_SERVERS
-from transceiver.constants import REDIS_KEY_SERVER_PREFIX
-from transceiver.constants import REDIS_KEY_CHANNELS
-from transceiver.constants import REDIS_KEY_CHANNEL_PREFIX
+from transceiver.models import (
+    Server,
+    Channel,
+    User,
+    Message,
+    Attachment)
+from transceiver.constants import (
+    REDIS_MESSAGE_EXPIRE_SECONDS,
+    REDIS_KEY_MESSAGE_PREFIX,
+    REDIS_KEY_MESSAGES,
+    REDIS_KEY_USERS,
+    REDIS_KEY_USER_PREFIX,
+    REDIS_KEY_SERVERS,
+    REDIS_KEY_SERVER_PREFIX,
+    REDIS_KEY_CHANNELS,
+    REDIS_KEY_CHANNEL_PREFIX)
 
 
 def urls_from_string(string: str) -> list[str]:

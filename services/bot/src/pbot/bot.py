@@ -66,6 +66,7 @@ class PBot:
             None
         '''
 
+        # TODO: Error handling.
         while True:
             for channel_id in active_channels(
                     self.redis,
