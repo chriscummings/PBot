@@ -4,15 +4,15 @@ Middleware in PBot serves as a way to intercept, inspect, modify, or respond to 
 
 **In this guide, you'll learn how to:**
 
-- Create your own middleware component by subclassing the Middleware class and implementing the required methods.
+- Create your own middleware by subclassing the `Middleware` class and implementing the required methods.
 
 - Manage dependencies and resources (e.g., connections to Redis) in your middleware.
 
-- Define and apply middleware conditions, such as responding to particular keywords.
+- Add custom logic, such as responding to particular keywords.
 
-- Load and integrate your middleware into the bot's lifecycle in the correct order.
+- Load your middleware.
 
-- We'll walk through a hands-on example using a *“taco recipes”* middleware.
+This will be a hands-on example using a *“taco recipes”* middleware.
 
 ## Subclass Middleware
 
