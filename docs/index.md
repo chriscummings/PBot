@@ -6,7 +6,7 @@ hide:
   - toc
   - title
 ---
-<img class="headerImage skip-lightbox" src="assets/images/pbot-art.png" style="width:100%;">
+<img class="headerImage skip-lightbox" src="assets/images/pbot-art.jpg" style="width:100%;">
 
 !!! info "1.0 Release Coming Sep 2025!"
 
