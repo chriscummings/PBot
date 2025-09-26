@@ -1,22 +1,19 @@
 # Writing Middleware
 
-Middleware in PBot serves as a way to intercept, inspect, modify, or respond to messages as they flow through the system. By writing custom middleware, you can add domain-specific logic without altering the core bot architecture.
+Middleware in PBot allows you to intercept, inspect, modify, or respond to messages as they flow through the system. By writing custom middleware, you can add domain-specific logic without touching the core bot architecture.
 
 **In this guide, you'll learn how to:**
 
-- Create your own middleware by subclassing the `Middleware` class and implementing the required methods.
+- Create custom middleware by subclassing Middleware and implementing required methods.
+- Manage dependencies and resources, such as Redis connections.
+- Add custom logic, such as responding to specific keywords.
+- Load and run your middleware.
 
-- Manage dependencies and resources (e.g., connections to Redis) in your middleware.
-
-- Add custom logic, such as responding to particular keywords.
-
-- Load your middleware.
-
-This will be a hands-on example using a *“taco recipes”* middleware.
+We'll demonstrate with a “taco recipes” middleware example.
 
 ## Subclass Middleware
 
-This first step in writing custom middleware is to create a Python file in `services/bot/src/pbot/middleware/`
+Create a Python file in `services/bot/src/pbot/middleware/`:
 
 ```text
 pbot/
@@ -28,19 +25,13 @@ pbot/
             └─ middleware/
                └─ base.py
                └─ tacos.py
-
 ```
-
-
 ### Create a Minimal Class
-
-
 
 Create a class that inherits from `Middleware` and implements the `handle_messages()` function.
 
 ```py title="tacos.py" linenums="1"
 from pbot.middleware.base import Middleware
-
 
 class TacoRecipes(Middleware):
 
@@ -48,13 +39,11 @@ class TacoRecipes(Middleware):
     return []
 ```
 
-:white_check_mark: The requirements of the Middleware class have been met with the implementation of the `handle_messages()` function.
-From here you can experiment at will.
+:white_check_mark: At this point, your class satisfies the Middleware interface.
 
 ### Redis Access
 
-We'll want our middleware to have access to the models in Redis, so let's create an
-initializer method to accept and store the Redis connection that will be passed to it by PBot on instantiation.
+To interact with Redis, define an initializer that stores the Redis connection passed by PBot:
 
 ```py title="tacos.py" hl_lines="6 7" linenums="1"
 from redis import Redis
@@ -72,7 +61,7 @@ class TacoRecipes(Middleware):
 
 ### Responding to Keywords
 
-We also want to respond to specific keywords in messages, so let's create a `KEYWORDS` constant to contain them.
+Add a KEYWORDS constant to define triggers for your middleware:
 
 ```py title="tacos.py" hl_lines="6" linenums="1"
 from redis import Redis
@@ -92,76 +81,62 @@ class TacoRecipes(Middleware):
 
 ###  Overriding `handle_messages()`
 
-We will change the `handle_messages()` function to address the following
-example requirements:
+Update `handle_messages()` to:
 
-- Create a response under the right keyword conditions.
-- Provide a UID for that response.
-- Populate the response with a random taco recipe from a list.
-
-Add the following imports:
+- Sort messages by timestamp.
+- Ignore bot messages and previously responded messages.
+- Create a response containing a random taco recipe when a keyword is found.
+- Return messages for downstream middleware.
 
 ```py title="tacos.py"
 import random
 from datetime import datetime
 from pbot.utils import create_response
 from recipes import TACO_RECIPES
+
+[...]
+
+def handle_messages(self, messages: list[dict]) -> list[dict]:
+  # Sort earliest messages first.
+  messages.sort(key=lambda m: float(m['time']))
+
+  for message in messages:
+
+      # Don't respond to bot messages.
+      if int(message['user']['bot']) == 1:
+          continue
+
+      # Don't respond to already responded messages.
+      if message['response']:
+          continue
+
+      for keyword in self.KEYWORDS:
+
+          # Respond if keyword is found in the message.
+          if keyword.lower() in message['content'].lower():
+
+              # Create a unique, arbitrary GUID for the response.
+              id = f'taco{datetime.now().timestamp()}'
+
+              # Preach the gospel of tacos.
+              create_response(
+                  self.redis,
+                  id,
+                  random.choice(TACO_RECIPES),
+                  message['id'])
+
+              # Move on to next message.
+              break
+
+  # Return messages for any follow-on middleware to handle.
+  return messages
 ```
-
-Update the business logic of the `handle_messages()` method to fullfil the example requirements.
-
-The code below does the following:
-
-- Sorts messages by time.
-- Ignores bot messages and previously responded messages.
-- Creates a response containing a random taco recipe if a keyword is found.
-- Returns the messages (to be passed to any following middleware).
-
-At the end of the middleware chain, each message in the list is marked as read.
-
-```py title="tacos.py"
-# Sort earliest messages first.
-messages.sort(key=lambda m: float(m['time']))
-
-for message in messages:
-
-    # Don't respond to bot messages.
-    if int(message['user']['bot']) == 1:
-        continue
-
-    # Don't respond to already responded messages.
-    if message['response']:
-        continue
-
-    for keyword in self.KEYWORDS:
-
-        # Respond if keyword is found in the message.
-        if keyword.lower() in message['content'].lower():
-
-            # Create a unique, arbitrary GUID for the response.
-            id = f'taco{datetime.now().timestamp()}'
-
-            # Preach the gospel of tacos.
-            create_response(
-                self.redis,
-                id,
-                random.choice(TACO_RECIPES),
-                message['id'])
-
-            # Move on to next message.
-            break
-
-# Return messages for any follow-on middleware to handle.
-return messages
-```
-
-!!! note "A timestamp as a UID isn't the ideal solution. This will be patched 1.0."
 
 ## Loading the Middleware
 
 ### Import the Middleware
 
-To load middleware, import it in the bot file: `pbot/services/bot/src/app.py`
+In `pbot/services/bot/src/app.py`:
 
 ```text title="pbot/app.py"
 pbot/
@@ -176,7 +151,6 @@ pbot/
 ```py title="app.py"
 from pbot.middleware.tacos import TacoRecipes
 ```
-
 
 ### Add the Middleware Module
 
@@ -204,9 +178,8 @@ redis = Redis(
 bot.add_middleware(TacoRecipes(redis))
 
 [...]
-
 ```
 
 ### Restart the Bot
 
-The bot service will now need to be restarted.
+After adding your middleware, restart the bot service to apply changes.

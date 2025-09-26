@@ -2,16 +2,19 @@
 
 ### Tranceiver Service
 
-A lightweight, event-driven service meant to transmit responses to and from Discord. If you don’t need to modify the models stored in Redis, you won’t need to delve into the transceiver service.
+A lightweight, event-driven service that handles communication with Discord.
+In most cases, you won't need to interact with the Transceiver directly unless
+you plan to modify the models stored in Redis.
 
 ### Bot Service
 
-The bot proper constantly scans for new messages stored in Redis and submits message history through the middleware stack.
+The heart of PBot. This service continuously scans Redis for new messages and
+runs the message history through the middleware stack.
 
 ### Redis Service
 
-In-memory data store between the bot and the transceiver service.
+An in-memory data store that sits between the Bot and Transceiver services, acting as the message bus.
 
 ### Redis Insight Service
 
-Provides a local GUI for the Redis service.
+A local GUI for inspecting and interacting with the Redis service, useful for debugging and monitoring.

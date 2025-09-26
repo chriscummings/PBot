@@ -1,14 +1,11 @@
 # Development Overview
 
-This section will cover writing your own custom middleware against the API of
-PBot.
+This section covers how to write your own custom middleware using the PBot API.
 
-PBot has two main service APIs: the **bot** and **transceiver**. It is the bot's
-job to send channel history through any loaded
-middleware whenever there is activity. The transceiver handles storing messages and sending
-them to Discord.
+PBot consists of two primary service APIs:
 
-
+- **Bot API** – Responsible for passing channel message history through any loaded middleware whenever activity occurs.
+- **Transceiver API** – Handles storing messages in Redis and sending them to Discord.
 
 **Current PBot Version:**
 --8<-- "version"
@@ -16,10 +13,6 @@ them to Discord.
 [:fontawesome-solid-download:  Download PBot by Version](https://github.com/chriscummings/PBot/releases){ .md-button .md-button--primary }
 
 -----
-
-
-
-
 
 **Starting Points**
 

@@ -2,7 +2,7 @@
 **/*.env
 **/.DS_Store
 **/__pycache__
-
+site/
 
 # Created by https://gitignore.org
 # Python.gitignore

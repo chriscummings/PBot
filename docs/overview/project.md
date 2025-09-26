@@ -6,8 +6,11 @@
     --8<-- "version"
     ).
 
-PBot is a Dockerized application consisting of two primary services:
-a **Transceiver service** that communicates with Discord and a **Bot service** that runs the middleware logic.
+
+PBot is a Dockerized application composed of two core services:
+
+- **Transceiver** – Handles communication with Discord.
+- **Bot** – Runs the middleware logic that powers your chatbot.
 
 ```mermaid
 ---
@@ -25,20 +28,28 @@ graph LR
   style Docker fill: none, stroke-dasharray: 5 5
 ```
 
-PBot is built around the idea of middleware, similar to many MVC-style web frameworks. PBot's goal is to push the boring details of writing a chatbot to the periphery, allowing the developer to focus solely on the core logic of their bot within the middleware paradigm.
+PBot takes inspiration from MVC-style web frameworks, centering its design on
+middleware. The framework handles the boilerplate and peripheral details of
+writing a Discord bot, so you can focus entirely on your bot's logic.
+
 ## Middleware
 
-Middleware is a stack of one or more modules that each can, in turn, act on the
-message history passed to it.
-Each layer may modify the history passed to it before passing it to the next.
+Middleware in PBot is a stack of one or more modules. Each module receives the
+current message history, can transform or act on it, and then passes the
+result along to the next module in the chain.
 
-Middleware, at a minimum, is just a single Python class that inherits
-from `pbot.middleware.base.Middleware`.
-Creating your own only requires that you implement a single
-method, `handle_messages()`.
-This method must accept a list of messages and return a list.
-What your middleware does with the messages or the list itself before
-passing it on is entirely up to you.
+At its simplest, middleware is a single Python class that inherits from
+`pbot.middleware.base.Middleware`. To create your own, you only need to
+implement one method:
+
+```py title="handle_messages()"
+def handle_messages(self, messages: list[dict]) -> list[dict]:
+  return []
+```
+
+This method accepts a list of messages and must return a list. What happens in
+between—filtering, transforming, augmenting, or generating responses—is
+entirely up to you.
 
 ## Project Structure
 

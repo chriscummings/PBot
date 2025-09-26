@@ -57,7 +57,6 @@ services:
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PORT=${REDIS_PORT}
 
-
 volumes:
   redis_data:
   redis_insight:

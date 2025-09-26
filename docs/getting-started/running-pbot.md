@@ -61,7 +61,7 @@ Replace the ??? with the secret application token provided by Discord.
 
 Navigate to the root directory of PBot and execute the following command:
 
-docker-compose up -d
+`docker-compose up -d`
 
 The -d parameter signals to Docker that the session should be detached. This way, you can close the terminal without also closing the running Docker application.
 

@@ -1,9 +1,5 @@
 # Local Development Python Requirements
 
-# sphinx
-# sphinx-autodoc-typehints
-# shibuya
-
 mkdocs-material
 mkdocstrings-python
 mkdocs-glightbox
