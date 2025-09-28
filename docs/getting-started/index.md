@@ -13,5 +13,5 @@ It only takes a few minutes and assumes you already have a Discord account.
 __Additional Guides__
 
 <div class="grid cards" markdown>
-- [**Using Redis Insight** Explore and manage your bot's data with a local GUI.](using-redis-insight.md)
+- [**Using Redis Insight** - Explore and manage your bot's data with a local GUI.](using-redis-insight.md)
 </div>
